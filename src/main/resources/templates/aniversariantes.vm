@@ -1,0 +1,102 @@
+#requireResource("br.rnp.confluence.plugins.aniversariantes:aniversariantes-resources")
+
+#set( $title = "Hoje é aniversário de:" )
+#set( $badge = false )
+#set( $baseFontSize = '16' )
+#set( $existeAniversariantes = $aniversariantes.size() > 0 ) 
+	
+<!-- Swiper -->
+<div class="swiper-aniv" style="font-size: 16px !important;">
+
+    <div class="swiper-header">
+        <div class="swiper-header-logo">
+            <img src="/download/resources/osgiteste:osgiteste-resources/images/generic/bolas.png" alt="">
+        </div>
+        <div class="swiper-header-text"
+            <span class="swiper-header-text-date">$dataAtual</span>
+            #if($existeAniversariantes)
+                <h4 class="swiper-header-text-title"> $title</h4>
+            #end
+        </div>
+    </div>
+    #if($existeAniversariantes)
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                #foreach( $aniversariante in $aniversariantes )
+                    <div class="swiper-slide">
+                        #if( $aniversariante.FUNCIONARIO_FOTO )
+                            <div class="foto-user ng-scope image-custom"
+                                style="background-image: url('/fotosAniversariantes/$aniversariante.FUNCIONARIO_FOTO')">
+                            </div>
+                        #else
+                            <div class="foto-user ng-scope image-custom"
+                                style="background-image: url('/download/resources/br.rnp.confluence.plugins.aniversariantes:aniversariantes-resources/images/profiles/default-person.png')">
+                            </div>
+                        #end
+                        #if ( $badge )
+                            <span class="badge-image on-badge"></span>
+                        #end
+                        <div class="name-user tooltip">
+                            <h3><a href="mailto:$aniversariante.FUNCIONARIO_EMAIL.toLowerCase()?Subject=Parabéns,%20$aniversariante.FUNCIONARIO_NOME_COMPLETO!">$aniversariante.FUNCIONARIO_NOME_COMPLETO</h3>
+                            #if ( $aniversariante.FUNCIONARIO_AREA || $aniversariante.FUNCIONARIO_NUCLEO )
+                                <span class="tooltiptext">
+                                    #if ( $aniversariante.FUNCIONARIO_AREA )
+                                        <span>$aniversariante.FUNCIONARIO_AREA</span>
+                                    #end
+                                    #if ( $aniversariante.FUNCIONARIO_NUCLEO )
+                                        #if ( $aniversariante.FUNCIONARIO_AREA )
+                                            <br>
+                                        #end
+                                        <span><strong>$aniversariante.FUNCIONARIO_NUCLEO</strong></span>
+                                    #end
+                                </span>
+                            #end
+                        </div>
+                    </div>
+                #end
+                </div>
+                <!-- Add Pagination -->
+                <!--<div class="swiper-pagination"></div>-->
+                <div class="swiper-aux">
+                <!-- Add Arrows -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <!--NAME-->
+                    <!--<div class="swiper-name"><h3>Aline de Souza Albuquerque</h3></div>-->
+                </div>
+                  <script>
+                    var swiper = new Swiper('.swiper-container', {
+                        slidesPerView: 'auto',
+                        centeredSlides: true,
+                        //loop: true,
+                        speed: 500,
+                        initialSlide: 1,
+                        autoHeight: true,
+                        centeredSlides: true,
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                        },
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                        autoplay: {
+                            delay: 5000,
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    #else
+        <h3 class="sem-aniversariantes">$msg</h3>
+    #end
+        
+</div>
+
+
+
+
+
+
+

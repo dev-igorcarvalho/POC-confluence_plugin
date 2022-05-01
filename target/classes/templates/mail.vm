@@ -1,0 +1,21 @@
+#requireResource("br.rnp.confluence.plugins.aniversariantes:aniversariantes-resources")
+
+#set( $title = "Hoje é aniversário de:" )
+#set( $badge = false )
+#set( $baseFontSize = '16' )
+#set( $existeAniversariantes = $aniversariantes.size() > 0 )
+
+<html>
+
+<head></head>
+
+<body>
+<p>Dear ${firstName} ${lastName},</p>
+<p>Sending Email using Spring 4 with <b>Velocity Template!!!</b></p>
+<p>Thanks</p>
+<p>${signature}</p>
+<p>${location}</p>
+</body>
+
+</html>
+

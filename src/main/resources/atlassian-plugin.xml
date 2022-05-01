@@ -1,0 +1,40 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="osgi"/>
+    
+    <!-- add our web resources -->
+    <web-resource key="osgi-resources" name="osgi Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        
+        <resource type="download" name="osgi.css" location="/css/osgi.css"/>
+        <resource type="download" name="osgi.js" location="/js/osgi.js"/>
+        <resource type="download" name="images/" location="/images"/>
+
+        <resource type="download" name="swiper.min.js" location="/js/swiper.min.js"/>
+        <resource type="download" name="swiper.min.css" location="/css/swiper.min.css"/>
+
+        <context>osgi</context>
+    </web-resource>
+
+    <job-config name="aniversariantes Job" key="aniversariantesJobConfig">
+        <job key="aniversariantesJob" perClusterJob="true" clusteredOnly="false"/>
+        <schedule cron-expression="	0 0 3 * * ?"/><!-- Todos os dias às 03:00:00h -->
+        <!--<schedule repeat-interval="60000"/>--><!-- 1 min -->
+        <managed editable="true" keepingHistory="true" canRunAdhoc="true" canDisable="true"/>
+    </job-config>
+
+    <xhtml-macro name="aniversariantesMacro-2.0" class="osgiteste.macro.AniversariantesMacro" key="rnp-macro-aniversariantes-2.0">
+        <description key="aniversariantes.macro.desc"/>
+        <category name="formatting"/>
+        <parameters/>
+    </xhtml-macro>
+    
+</atlassian-plugin>

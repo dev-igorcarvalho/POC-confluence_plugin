@@ -1,0 +1,169 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:s0="http://localhost" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://localhost">
+    <wsdl:types>
+        <s:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://localhost">
+            <s:element name="GET_EMAIL">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element name="CTIPORET" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GET_EMAILRESPONSE">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element name="GET_EMAILRESULT" type="s0:ARRAYOFEMAILFUNC"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GET_NIVER">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element name="DDATINI" type="s:date"/>
+                        <s:element name="DDATFIM" type="s:date"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GET_NIVERRESPONSE">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element name="GET_NIVERRESULT" type="s0:ARRAYOFANIVERSARIANTE"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="ANIVERSARIANTE">
+                <s:sequence>
+                    <s:element name="FUNCIONARIO_AREA" type="s:string"/>
+                    <s:element name="FUNCIONARIO_EMAIL" type="s:string"/>
+                    <s:element name="FUNCIONARIO_FILIAL" type="s:string"/>
+                    <s:element name="FUNCIONARIO_FOTO" type="s:string"/>
+                    <s:element name="FUNCIONARIO_ID" type="s:string"/>
+                    <s:element name="FUNCIONARIO_NOME" type="s:string"/>
+                    <s:element name="FUNCIONARIO_NOME_COMPLETO" type="s:string"/>
+                    <s:element name="FUNCIONARIO_NUCLEO" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="EMAILFUNC">
+                <s:sequence>
+                    <s:element name="FUNC_EMAIL" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ARRAYOFANIVERSARIANTE">
+                <s:sequence>
+                    <s:element maxOccurs="unbounded" minOccurs="0" name="ANIVERSARIANTE" type="s0:ANIVERSARIANTE"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ARRAYOFEMAILFUNC">
+                <s:sequence>
+                    <s:element maxOccurs="unbounded" minOccurs="0" name="EMAILFUNC" type="s0:EMAILFUNC"/>
+                </s:sequence>
+            </s:complexType>
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="GET_NIVERSOAPIN">
+        <wsdl:part name="parameters" element="s0:GET_NIVER"/>
+    </wsdl:message>
+    <wsdl:message name="GET_NIVERSOAPOUT">
+        <wsdl:part name="parameters" element="s0:GET_NIVERRESPONSE"/>
+    </wsdl:message>
+    <wsdl:message name="GET_EMAILSOAPIN">
+        <wsdl:part name="parameters" element="s0:GET_EMAIL"/>
+    </wsdl:message>
+    <wsdl:message name="GET_EMAILSOAPOUT">
+        <wsdl:part name="parameters" element="s0:GET_EMAILRESPONSE"/>
+    </wsdl:message>
+    <wsdl:portType name="AniversariantesProxyPortType">
+        <wsdl:operation name="GET_NIVER">
+            <wsdl:documentation>Metodo para retonar um array de aniversariantes do dia ou datas especificas</wsdl:documentation>
+            <wsdl:input message="s0:GET_NIVERSOAPIN" wsaw:Action="http://localhost/GET_NIVER"/>
+            <wsdl:output message="s0:GET_NIVERSOAPOUT" wsaw:Action="http://localhost/WSRNPNIVERSOAP/GET_NIVERResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GET_EMAIL">
+            <wsdl:documentation>Metodo para retonar um array de enderecos e-mails</wsdl:documentation>
+            <wsdl:input message="s0:GET_EMAILSOAPIN" wsaw:Action="http://localhost/GET_EMAIL"/>
+            <wsdl:output message="s0:GET_EMAILSOAPOUT" wsaw:Action="http://localhost/WSRNPNIVERSOAP/GET_EMAILResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="AniversariantesProxySoap11Binding" type="s0:AniversariantesProxyPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="GET_EMAIL">
+            <soap:operation soapAction="http://localhost/GET_EMAIL" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GET_NIVER">
+            <soap:operation soapAction="http://localhost/GET_NIVER" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="AniversariantesProxySoap12Binding" type="s0:AniversariantesProxyPortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="GET_EMAIL">
+            <soap12:operation soapAction="http://localhost/GET_EMAIL" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GET_NIVER">
+            <soap12:operation soapAction="http://localhost/GET_NIVER" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="AniversariantesProxyHttpBinding" type="s0:AniversariantesProxyPortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="GET_EMAIL">
+            <http:operation location="GET_EMAIL"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GET_NIVER">
+            <http:operation location="GET_NIVER"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="AniversariantesProxy">
+        <wsdl:port name="AniversariantesProxyHttpSoap11Endpoint" binding="s0:AniversariantesProxySoap11Binding">
+            <soap:address location="http://barramento.rnp.br:8280/services/AniversariantesProxy.AniversariantesProxyHttpSoap11Endpoint"/>
+        </wsdl:port>
+        <wsdl:port name="AniversariantesProxyHttpsSoap11Endpoint" binding="s0:AniversariantesProxySoap11Binding">
+            <soap:address location="https://barramento.rnp.br:8243/services/AniversariantesProxy.AniversariantesProxyHttpsSoap11Endpoint"/>
+        </wsdl:port>
+        <wsdl:port name="AniversariantesProxyHttpSoap12Endpoint" binding="s0:AniversariantesProxySoap12Binding">
+            <soap12:address location="http://barramento.rnp.br:8280/services/AniversariantesProxy.AniversariantesProxyHttpSoap12Endpoint"/>
+        </wsdl:port>
+        <wsdl:port name="AniversariantesProxyHttpsSoap12Endpoint" binding="s0:AniversariantesProxySoap12Binding">
+            <soap12:address location="https://barramento.rnp.br:8243/services/AniversariantesProxy.AniversariantesProxyHttpsSoap12Endpoint"/>
+        </wsdl:port>
+        <wsdl:port name="AniversariantesProxyHttpsEndpoint" binding="s0:AniversariantesProxyHttpBinding">
+            <http:address location="https://barramento.rnp.br:8243/services/AniversariantesProxy.AniversariantesProxyHttpsEndpoint"/>
+        </wsdl:port>
+        <wsdl:port name="AniversariantesProxyHttpEndpoint" binding="s0:AniversariantesProxyHttpBinding">
+            <http:address location="http://barramento.rnp.br:8280/services/AniversariantesProxy.AniversariantesProxyHttpEndpoint"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
