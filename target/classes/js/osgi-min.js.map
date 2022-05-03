@@ -2,7 +2,7 @@
 "version":3,
 "file":"/dummy-file-path",
 "lineCount":1,
-"mappings":";",
-"sources":[],
-"names":[]
+"mappings":"AAAAA,OAAAC,IAAA,CAAY,2BAAZ;",
+"sources":["input.js"],
+"names":["console","log"]
 }

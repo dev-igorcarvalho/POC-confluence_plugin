@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.ui.velocity.VelocityEngineFactory;
+import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -34,15 +35,16 @@ public class EmailConfig {
 
         return mailSender;
     }
-
 //    @Bean
-//    public VelocityEngine velocityEngine() throws VelocityException, IOException {
-//        VelocityEngineFactory velocityEngineFactory = new VelocityEngineFactory();
+//    public VelocityEngine velocityEngine() throws VelocityException, IOException{
+//        VelocityEngineFactoryBean factory = new VelocityEngineFactoryBean();
 //        Properties props = new Properties();
 //        props.put("resource.loader", "class");
-//        props.put("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+//        props.put("class.resource.loader.class",
+//              "org.apache.velocity.runtime.resource.loader." +
+//                    "ClasspathResourceLoader");
+//        factory.setVelocityProperties(props);
 //
-//        velocityEngineFactory.setVelocityProperties(props);
-//        return velocityEngineFactory.createVelocityEngine();
+//        return factory.createVelocityEngine();
 //    }
 }

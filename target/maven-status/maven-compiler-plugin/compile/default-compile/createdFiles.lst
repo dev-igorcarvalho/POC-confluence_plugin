@@ -4,6 +4,7 @@ osgiteste/api/soap/client/AniversariantesProxySoap11BindingStub.class
 osgiteste/scheduled/AniversariantesJob.class
 osgiteste/api/soap/client/EMAILFUNC.class
 osgiteste/api/soap/client/AniversariantesProxy.class
+osgiteste/util/Logger.class
 osgiteste/api/soap/client/service/AniversariantesService.class
 osgiteste/service/EmailService.class
 osgiteste/config/EmailConfig.class

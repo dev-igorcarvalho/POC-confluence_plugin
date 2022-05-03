@@ -2,16 +2,20 @@ package osgiteste.service;
 
 
 import com.atlassian.confluence.renderer.radeox.macros.MacroUtils;
-import org.apache.velocity.app.VelocityEngine;
+import com.atlassian.confluence.util.velocity.VelocityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.velocity.VelocityEngineUtils;
 import osgiteste.api.soap.client.service.AniversariantesServiceImpl;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -20,32 +24,41 @@ import java.util.Map;
 @Service
 public class EmailService {
 
+    private static final Logger log = LoggerFactory.getLogger(EmailService.class);
     private final JavaMailSender javaMailSender;
-//    private final VelocityEngine velocityEngine;
     private final AniversariantesServiceImpl aniversariantesService;
 
     public EmailService(JavaMailSender javaMailSender, AniversariantesServiceImpl aniversariantesService) {
         this.javaMailSender = javaMailSender;
-//        this.velocityEngine = velocityEngine;
         this.aniversariantesService = aniversariantesService;
     }
 
 
     public void enviarEmailAniversariantes() {
-        // TODO: mudar para html mail
-        // TODO: criar arquivos pros templates
-
         MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail);
         try {
-            helper.setTo("igor.carvalho@datagrupo.com.br");
+            helper.setTo("igor.carvalho@terceiro.rnp.br");
             helper.setSubject("Não é virús, não é bug, é so o Igor testando uns emails ❤️");
             helper.setFrom("Confluence");
-            helper.setText(gerarMsgContato(), true);
+            helper.setText(geralHtmlMailDoTempalte(), true);
             javaMailSender.send(mail);
         } catch (MailException | MessagingException e) {
-            System.out.println("Houve algum problema no envio de email" + e);
-//            log.error("Houve algum problema no envio de email", e);
+            osgiteste.util.Logger.error("Houve algum problema no envio de email", e);
+        }
+    }
+
+    public void enviarEmailFalha() {
+        MimeMessage mail = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mail);
+        try {
+            helper.setTo("igor.carvalho@terceiro.rnp.br");
+            helper.setSubject("Não é virús, não é bug, é so o Igor testando uns emails ❤️");
+            helper.setFrom("Confluence");
+            helper.setText("O envio falho", true);
+            javaMailSender.send(mail);
+        } catch (MailException | MessagingException e) {
+            osgiteste.util.Logger.error("Houve algum problema no envio de email", e);
         }
     }
 
@@ -68,6 +81,20 @@ public class EmailService {
         return sb.toString();
     }
 
+    private String geralHtmlMailDoTempalte() {
+        Map<String, Object> result = aniversariantesService.getAniversariantesDoDia();
+        Date dataAtual = new Date();
+        Locale BRAZIL = new Locale("pt", "BR");
+        SimpleDateFormat formatador = new SimpleDateFormat("dd MMMM", BRAZIL);
+        String dataFormatada = formatador.format(dataAtual);
+
+        Map<String, Object> context = MacroUtils.defaultVelocityContext();
+        context.put("aniversariantes", result.get("aniversariantes"));
+        context.put("msg", result.get("msg"));
+        context.put("dataAtual", dataFormatada.toUpperCase());
+        // Render the Template
+        return VelocityUtils.getRenderedTemplate("/templates/mail.vm", context);
+    }
 //    private String gerarHtmlMailDoTemplate(Map<String, Object> model) {
 //        Map<String, Object> result = aniversariantesService.getAniversariantesDoDia();
 //
