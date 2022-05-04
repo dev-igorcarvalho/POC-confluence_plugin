@@ -1,7 +1,7 @@
-<repository lastmodified='20220503032120.161'>
+<repository lastmodified='20220504031545.076'>
   <resource id='br.com.igor.osgi/1.0.0.SNAPSHOT' symbolicname='br.com.igor.osgi' presentationname='osgi' uri='osgi-1.0.0-SNAPSHOT.jar' version='1.0.0.SNAPSHOT'>
     <description>This is the br.com.igor:osgi plugin for Atlassian Confluence.</description>
-    <size>2321185</size>
+    <size>2767148</size>
     <documentation>http://www.example.com/</documentation>
     <capability name='bundle'>
       <p n='symbolicname' v='br.com.igor.osgi'/>
@@ -92,7 +92,6 @@
     <require name='package' filter='(&amp;(package=org.springframework.cglib.reflect))' extend='false' multiple='false' optional='true'>Import package org.springframework.cglib.reflect;resolution:=optional;version=0</require>
     <require name='package' filter='(&amp;(package=org.springframework.context))' extend='false' multiple='false' optional='true'>Import package org.springframework.context;resolution:=optional;version=0</require>
     <require name='package' filter='(&amp;(package=org.springframework.context.annotation))' extend='false' multiple='false' optional='true'>Import package org.springframework.context.annotation;resolution:=optional;version=0</require>
-    <require name='package' filter='(&amp;(package=org.springframework.core.env))' extend='false' multiple='false' optional='true'>Import package org.springframework.core.env;resolution:=optional;version=0</require>
     <require name='package' filter='(&amp;(package=org.springframework.core.type))' extend='false' multiple='false' optional='true'>Import package org.springframework.core.type;resolution:=optional;version=0</require>
     <require name='package' filter='(&amp;(package=org.springframework.mail))' extend='false' multiple='false' optional='true'>Import package org.springframework.mail;resolution:=optional;version=0</require>
     <require name='package' filter='(&amp;(package=org.springframework.mail.javamail))' extend='false' multiple='false' optional='true'>Import package org.springframework.mail.javamail;resolution:=optional;version=0</require>

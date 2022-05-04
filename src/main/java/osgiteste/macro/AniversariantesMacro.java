@@ -5,11 +5,13 @@ import com.atlassian.confluence.macro.Macro;
 import com.atlassian.confluence.macro.MacroExecutionException;
 import com.atlassian.confluence.renderer.radeox.macros.MacroUtils;
 import com.atlassian.confluence.util.velocity.VelocityUtils;
+import osgiteste.api.soap.client.ANIVERSARIANTE;
 import osgiteste.api.soap.client.service.AniversariantesService;
 import osgiteste.api.soap.client.service.AniversariantesServiceImpl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -41,6 +43,7 @@ public class AniversariantesMacro implements Macro {
         return VelocityUtils.getRenderedTemplate("/templates/aniversariantes.vm", context);
 
     }
+
 
     @Override
     public BodyType getBodyType() {

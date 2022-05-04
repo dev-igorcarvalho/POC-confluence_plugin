@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
-Atlassian-Build-Date: 2022-05-03T15:21:18-0300
+Atlassian-Build-Date: 2022-05-04T15:15:43-0300
 Atlassian-Plugin-Key: br.com.igor.osgi
-Bnd-LastModified: 1651602079807
+Bnd-LastModified: 1651688144624
 Build-Jdk: 11.0.12
 Built-By: tomcat
 Bundle-Description: This is the br.com.igor:osgi plugin for Atlassian Co
@@ -76,14 +76,13 @@ Import-Package: org.eclipse.gemini.blueprint.context;resolution:=optiona
  rk.cglib.proxy;version=0;resolution:=optional,org.springframework.cglib
  .reflect;version=0;resolution:=optional,org.springframework.context;ver
  sion=0;resolution:=optional,org.springframework.context.annotation;vers
- ion=0;resolution:=optional,org.springframework.core.env;version=0;resol
- ution:=optional,org.springframework.core.type;version=0;resolution:=opt
- ional,org.springframework.mail;version=0;resolution:=optional,org.sprin
- gframework.mail.javamail;version=0;resolution:=optional,org.springframe
- work.stereotype;version=0;resolution:=optional,org.w3c.dom;version=0;re
- solution:=optional,org.xml.sax;version=0;resolution:=optional,org.xml.s
- ax.ext;version=0;resolution:=optional,org.xml.sax.helpers;version=0;res
- olution:=optional,sun.awt.image.codec;version=0;resolution:=optional,su
- n.security.provider;version=0;resolution:=optional
+ ion=0;resolution:=optional,org.springframework.core.type;version=0;reso
+ lution:=optional,org.springframework.mail;version=0;resolution:=optiona
+ l,org.springframework.mail.javamail;version=0;resolution:=optional,org.
+ springframework.stereotype;version=0;resolution:=optional,org.w3c.dom;v
+ ersion=0;resolution:=optional,org.xml.sax;version=0;resolution:=optiona
+ l,org.xml.sax.ext;version=0;resolution:=optional,org.xml.sax.helpers;ve
+ rsion=0;resolution:=optional,sun.awt.image.codec;version=0;resolution:=
+ optional,sun.security.provider;version=0;resolution:=optional
 Spring-Context: *
 Tool: Bnd-3.5.0.201709291849

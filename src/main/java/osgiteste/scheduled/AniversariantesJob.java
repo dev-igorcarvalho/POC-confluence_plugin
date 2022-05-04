@@ -5,14 +5,22 @@ import com.atlassian.scheduler.JobRunner;
 import com.atlassian.scheduler.JobRunnerRequest;
 import com.atlassian.scheduler.JobRunnerResponse;
 import dev.failsafe.*;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import osgiteste.api.soap.client.ANIVERSARIANTE;
 import osgiteste.api.soap.client.service.AniversariantesServiceImpl;
+import osgiteste.interactor.FecthAniversariantesDiaFromProtheus;
+import osgiteste.interactor.GenerateAniversariantesDia;
+import osgiteste.interactor.SendAniversariantesDiaMail;
+import osgiteste.interactor.SendEmailFalhaTecnica;
 import osgiteste.service.EmailService;
 import osgiteste.util.Logger;
+import osgiteste.util.PropertiesInteractor;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -20,17 +28,25 @@ import java.util.concurrent.CompletableFuture;
 @Component
 public class AniversariantesJob implements JobRunner {
 
-    private Environment env;
+    private final PropertiesInteractor propertiesInteractor;
     private final EmailService emailService;
-
     private final AniversariantesServiceImpl aniversariantesService;
+    private final SendEmailFalhaTecnica sendEmailFalhaTecnica;
+
+    private final FecthAniversariantesDiaFromProtheus fecthAniversariantesDiaFromProtheus;
+    private final GenerateAniversariantesDia generateAniversariantesDia;
+    private final SendAniversariantesDiaMail sendAniversariantesDiaMail;
 
     public AniversariantesJob(
-          Environment env, EmailService emailService,
-          AniversariantesServiceImpl aniversariantesService) {
-        this.env = env;
+          PropertiesInteractor propertiesInteractor, EmailService emailService,
+          AniversariantesServiceImpl aniversariantesService, SendEmailFalhaTecnica sendEmailFalhaTecnica, FecthAniversariantesDiaFromProtheus fecthAniversariantesDiaFromProtheus, GenerateAniversariantesDia generateAniversariantesDia, SendAniversariantesDiaMail sendAniversariantesDiaMail) {
+        this.propertiesInteractor = propertiesInteractor;
         this.emailService = emailService;
         this.aniversariantesService = aniversariantesService;
+        this.sendEmailFalhaTecnica = sendEmailFalhaTecnica;
+        this.fecthAniversariantesDiaFromProtheus = fecthAniversariantesDiaFromProtheus;
+        this.generateAniversariantesDia = generateAniversariantesDia;
+        this.sendAniversariantesDiaMail = sendAniversariantesDiaMail;
     }
 
     //todo adicionar um retry em caso de falha
@@ -39,27 +55,6 @@ public class AniversariantesJob implements JobRunner {
         sendAniversariantesAsync();
         Logger.info("JOB FINALIZADO, A TASK ASINCRONA CONTINUARA EM PARALELO");
         return JobRunnerResponse.success("JOB FINALIZADO COM SUCESSO");
-
-//
-//
-//        if (request.isCancellationRequested()) {
-//            return JobRunnerResponse.aborted("JOB NEW ANIVERSARIANTES ABORTADO");
-//        }
-//
-//        try {
-
-//            if (aniversariantes != null && !aniversariantes.isEmpty()) {
-//                printAniverasriantes(aniversariantes);
-//                emailService.enviarEmailAniversariantes();
-//            } else {
-////                TODO:email de error report pros adm
-//            }
-//
-//            return JobRunnerResponse.success();
-//        } catch (Exception e) {
-//            System.out.println("ERRO NA EXECUÇÃO DO JOB JOB NEW ANIVERSARIANTES - " + e.getMessage());
-//            return JobRunnerResponse.failed(e.getMessage());
-//        }
     }
 
     private void sendAniversariantesAsync() {
@@ -71,13 +66,16 @@ public class AniversariantesJob implements JobRunner {
     }
 
     private FailsafeExecutor<Object> getObjectFailsafeExecutor() {
+        int secondsToTimeout = propertiesInteractor.getIntByKey("aniversariantes.job.timeout", 10);
+        int maxRetries = propertiesInteractor.getIntByKey("aniversariantes.job.maxRetries", 2);
+        int secondsToRetry = propertiesInteractor.getIntByKey("aniversariantes.job.retryDelay", 1);
         RetryPolicy<Object> retryPolicy = RetryPolicy.builder()
               .handle(Throwable.class)
-              .withDelay(Duration.ofSeconds(1))//todo passar para o properties
-              .withMaxRetries(2)//todo passar para o properties
+              .withDelay(Duration.ofSeconds(secondsToRetry))//todo passar para o properties
+              .withMaxRetries(maxRetries)//todo passar para o properties
               .build();
         Fallback<Object> fallback = Fallback.of(() -> enviarNotificacaoDeFalha());
-        Timeout<Object> timeout = Timeout.of(Duration.ofSeconds(10)); //todo passar para o properties
+        Timeout<Object> timeout = Timeout.of(Duration.ofSeconds(secondsToTimeout)); //todo passar para o properties
         FailsafeExecutor<Object> failsafeExecutor = Failsafe.with(fallback)
               .compose(retryPolicy)
               .compose(timeout);
@@ -85,21 +83,31 @@ public class AniversariantesJob implements JobRunner {
     }
 
     private void enviarEmailAniversariantes() {
-        List<ANIVERSARIANTE> aniversariantes = getAniversariantesFromProtheus();
+//        List<ANIVERSARIANTE> aniversariantes = getAniversariantesFromProtheus();
+        ANIVERSARIANTE[] protheusResult = fecthAniversariantesDiaFromProtheus.execute();
+        List<ANIVERSARIANTE> aniversariantes = generateAniversariantesDia.execute(protheusResult);
         printAniverasriantes(aniversariantes);
-        emailService.enviarEmailAniversariantes();
+//        emailService.enviarEmailAniversariantes(aniversariantes);
+        sendAniversariantesDiaMail.execute(aniversariantes);
     }
 
     private void enviarNotificacaoDeFalha() {
         Logger.info("TODAS TENTATIVAS FALHARAM");
+//        emailService.enviarEmailFalha();
+        sendEmailFalhaTecnica.execute();
     }
 
-    private List<ANIVERSARIANTE> getAniversariantesFromProtheus() {
-        Map<String, Object> result = aniversariantesService.getAniversariantesDoDia();
-        List<ANIVERSARIANTE> aniversariantes = (List<ANIVERSARIANTE>) result.get("aniversariantes");
-        if (aniversariantes == null || aniversariantes.isEmpty()) throw new RuntimeException();
-        return aniversariantes;
-    }
+//    private List<ANIVERSARIANTE> getAniversariantesFromProtheus() {
+//        Date dataInicio = Date.from(LocalDate.of(2022, Month.MAY, 2).atStartOfDay(ZoneId.systemDefault()).toInstant());
+//        Date dataFim = Date.from(LocalDate.of(2022, Month.MAY, 2).atStartOfDay(ZoneId.systemDefault()).toInstant());
+////        Map<String, Object> result = aniversariantesService.getAniversariantesDoDia();
+//        Map<String, Object> result = aniversariantesService.getAniversariantesPorPeriodo(dataInicio, dataFim);
+//
+//        List<ANIVERSARIANTE> aniversariantes = (List<ANIVERSARIANTE>) result.get("aniversariantes");
+//        //TODO empty nao eh erro, eh so nao enviar o email de aniversariantes
+//        if (aniversariantes == null || aniversariantes.isEmpty()) throw new RuntimeException();
+//        return aniversariantes;
+//    }
 
     private void printAniverasriantes(List<ANIVERSARIANTE> aniversariantes) {
         System.out.println("");

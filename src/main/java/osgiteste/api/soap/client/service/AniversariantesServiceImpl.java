@@ -62,7 +62,6 @@ public class AniversariantesServiceImpl implements AniversariantesService {
         for (int i = 0; i < aniversariantes.length; i++) {
             ANIVERSARIANTE aniversariante = aniversariantes[i];
             if (!aniversariante.getFUNCIONARIO_EMAIL().isEmpty() && verificaEmailValido(aniversariante.getFUNCIONARIO_EMAIL().toLowerCase())) {
-
 //                aniversariante.setFUNCIONARIO_FOTO(buscaFoto(aniversariante.getFUNCIONARIO_FOTO()));
                 aniversariante.setFUNCIONARIO_FOTO(populateFotoAniversariante(aniversariante.getFUNCIONARIO_FOTO()));
 
@@ -150,8 +149,8 @@ public class AniversariantesServiceImpl implements AniversariantesService {
     }
 
     private Properties carregaPropriedades() {
-        Properties p = new Properties();
 
+        Properties p = new Properties();
         InputStream is = getClass().getClassLoader().getResourceAsStream("osgi.properties");
 
         if (is != null) {

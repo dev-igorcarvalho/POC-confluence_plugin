@@ -9,14 +9,13 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import osgiteste.api.soap.client.ANIVERSARIANTE;
 import osgiteste.api.soap.client.service.AniversariantesServiceImpl;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by : 01001001 01000011 at 29/06/2021
@@ -34,14 +33,14 @@ public class EmailService {
     }
 
 
-    public void enviarEmailAniversariantes() {
+    public void enviarEmailAniversariantes(List<ANIVERSARIANTE> aniversariantes) {
         MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail);
         try {
             helper.setTo("igor.carvalho@terceiro.rnp.br");
             helper.setSubject("Não é virús, não é bug, é so o Igor testando uns emails ❤️");
             helper.setFrom("Confluence");
-            helper.setText(geralHtmlMailDoTempalte(), true);
+            helper.setText(geralHtmlMailDoTempalte(aniversariantes), true);
             javaMailSender.send(mail);
         } catch (MailException | MessagingException e) {
             osgiteste.util.Logger.error("Houve algum problema no envio de email", e);
@@ -55,7 +54,7 @@ public class EmailService {
             helper.setTo("igor.carvalho@terceiro.rnp.br");
             helper.setSubject("Não é virús, não é bug, é so o Igor testando uns emails ❤️");
             helper.setFrom("Confluence");
-            helper.setText("O envio falho", true);
+            helper.setText("O envio falhou", true);
             javaMailSender.send(mail);
         } catch (MailException | MessagingException e) {
             osgiteste.util.Logger.error("Houve algum problema no envio de email", e);
@@ -81,19 +80,31 @@ public class EmailService {
         return sb.toString();
     }
 
-    private String geralHtmlMailDoTempalte() {
-        Map<String, Object> result = aniversariantesService.getAniversariantesDoDia();
+    private String geralHtmlMailDoTempalte(List<ANIVERSARIANTE> aniversariantes) {
         Date dataAtual = new Date();
         Locale BRAZIL = new Locale("pt", "BR");
         SimpleDateFormat formatador = new SimpleDateFormat("dd MMMM", BRAZIL);
         String dataFormatada = formatador.format(dataAtual);
-
         Map<String, Object> context = MacroUtils.defaultVelocityContext();
-        context.put("aniversariantes", result.get("aniversariantes"));
-        context.put("msg", result.get("msg"));
+        context.put("aniversariantes", getAniversariantesMatrix(aniversariantes));
         context.put("dataAtual", dataFormatada.toUpperCase());
         // Render the Template
         return VelocityUtils.getRenderedTemplate("/templates/mail.vm", context);
+    }
+
+    private List<List<ANIVERSARIANTE>> getAniversariantesMatrix(List<ANIVERSARIANTE> aniversariantes) {
+        List<List<ANIVERSARIANTE>> result = new ArrayList<>();
+        for (int i = 0; i < aniversariantes.size(); i++) {
+            int element = i;
+            int nextElement = i + 2;
+            if (i == aniversariantes.size() - 1) {
+                result.add(Arrays.asList(aniversariantes.get(element)));
+            } else {
+                result.add(aniversariantes.subList(element, nextElement));
+                i++;
+            }
+        }
+        return result;
     }
 //    private String gerarHtmlMailDoTemplate(Map<String, Object> model) {
 //        Map<String, Object> result = aniversariantesService.getAniversariantesDoDia();
