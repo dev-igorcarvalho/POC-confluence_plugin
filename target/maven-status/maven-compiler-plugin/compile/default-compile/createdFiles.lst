@@ -1,4 +1,3 @@
-osgiteste/api/soap/client/service/AniversariantesServiceImpl.class
 osgiteste/interactor/GenerateHtmlMailFromVelocityTemplate.class
 osgiteste/interactor/ConsolePrintAniversaraintes.class
 osgiteste/interactor/FecthAniversariantesDiaFromProtheus.class
@@ -9,9 +8,7 @@ osgiteste/scheduled/AniversariantesJob.class
 osgiteste/api/soap/client/EMAILFUNC.class
 osgiteste/api/soap/client/AniversariantesProxy.class
 osgiteste/util/Logger.class
-osgiteste/api/soap/client/service/AniversariantesService.class
 osgiteste/interactor/GenerateAniversariantesPhoto.class
-osgiteste/service/EmailService.class
 osgiteste/util/PropertiesInteractor.class
 osgiteste/interactor/GenerateHtmlPageFromVelocityTemplate.class
 osgiteste/config/EmailConfig.class

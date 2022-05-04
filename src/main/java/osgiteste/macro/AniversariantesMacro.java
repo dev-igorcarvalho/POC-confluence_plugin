@@ -3,16 +3,9 @@ package osgiteste.macro;
 import com.atlassian.confluence.content.render.xhtml.ConversionContext;
 import com.atlassian.confluence.macro.Macro;
 import com.atlassian.confluence.macro.MacroExecutionException;
-import com.atlassian.confluence.renderer.radeox.macros.MacroUtils;
-import com.atlassian.confluence.util.velocity.VelocityUtils;
 import org.springframework.stereotype.Component;
-import osgiteste.api.soap.client.service.AniversariantesService;
-import osgiteste.api.soap.client.service.AniversariantesServiceImpl;
 import osgiteste.interactor.GenerateHtmlPageFromVelocityTemplate;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
 
 

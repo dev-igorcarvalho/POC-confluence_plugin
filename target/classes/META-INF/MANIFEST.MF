@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
-Atlassian-Build-Date: 2022-05-04T16:37:02-0300
+Atlassian-Build-Date: 2022-05-04T16:43:59-0300
 Atlassian-Plugin-Key: br.com.igor.osgi
-Bnd-LastModified: 1651693023860
+Bnd-LastModified: 1651693440906
 Build-Jdk: 11.0.12
 Built-By: tomcat
 Bundle-Description: This is the br.com.igor:osgi plugin for Atlassian Co
