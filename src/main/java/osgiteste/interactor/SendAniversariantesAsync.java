@@ -41,7 +41,7 @@ public class SendAniversariantesAsync {
         int secondsToTimeout = propertiesInteractor.getIntByKey("aniversariantes.job.timeout", 10);
         int maxRetries = propertiesInteractor.getIntByKey("aniversariantes.job.maxRetries", 2);
         int secondsToRetry = propertiesInteractor.getIntByKey("aniversariantes.job.retryDelay", 1);
-        RetryPolicy<Object> retryPolicy = RetryPolicy.builder().handle(Throwable.class).withDelay(Duration.ofSeconds(secondsToRetry))//todo passar para o properties
+        RetryPolicy<Object> retryPolicy = RetryPolicy.builder().handle(Throwable.class).withDelay(Duration.ofSeconds(secondsToRetry))
               .withMaxRetries(maxRetries)
               .build();
         Fallback<Object> fallback = Fallback.of(() -> enviarNotificacaoDeFalha());

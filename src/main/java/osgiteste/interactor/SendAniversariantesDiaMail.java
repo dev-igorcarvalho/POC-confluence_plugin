@@ -5,6 +5,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import osgiteste.api.soap.client.ANIVERSARIANTE;
+import osgiteste.util.PropertiesInteractor;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -15,9 +16,12 @@ public class SendAniversariantesDiaMail {
     private final JavaMailSender javaMailSender;
     private final GenerateHtmlMailFromVelocityTemplate generateHtmlMailFromVelocityTemplate;
 
-    public SendAniversariantesDiaMail(JavaMailSender javaMailSender, GenerateHtmlMailFromVelocityTemplate generateHtmlMailFromVelocityTemplate) {
+    private final PropertiesInteractor propertiesInteractor;
+
+    public SendAniversariantesDiaMail(JavaMailSender javaMailSender, GenerateHtmlMailFromVelocityTemplate generateHtmlMailFromVelocityTemplate, PropertiesInteractor propertiesInteractor) {
         this.javaMailSender = javaMailSender;
         this.generateHtmlMailFromVelocityTemplate = generateHtmlMailFromVelocityTemplate;
+        this.propertiesInteractor = propertiesInteractor;
     }
 
     public void execute(List<ANIVERSARIANTE> aniversariantes) {
@@ -27,9 +31,9 @@ public class SendAniversariantesDiaMail {
         MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail);
         try {
-            helper.setTo("igor.carvalho@terceiro.rnp.br");//TODO PEGAR DO PROPERTIES
-            helper.setSubject("Não é virús, não é bug, é so o Igor testando uns emails ❤️");//TODO PEGAR DO PROPERTIES
-            helper.setFrom("Confluence");//TODO PEGAR DO PROPERTIES
+            helper.setTo(propertiesInteractor.getStringByKey("aniversariantes.mail.destinatario"));
+            helper.setSubject(propertiesInteractor.getStringByKey("aniversariantes.mail.assunto"));
+            helper.setFrom(propertiesInteractor.getStringByKey("aniversariantes.mail.remetente"));
             helper.setText(generateHtmlMailFromVelocityTemplate.execute(aniversariantes), true);
             javaMailSender.send(mail);
         } catch (MailException | MessagingException e) {
