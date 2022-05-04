@@ -1,4 +1,4 @@
-package osgiteste.api.soap.client;
+package osgiteste.api.soap.generated;
 
 public class AniversariantesProxyPortTypeProxy implements AniversariantesProxyPortType {
   private String _endpoint = null;

@@ -4,7 +4,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
-import osgiteste.api.soap.client.ANIVERSARIANTE;
+import osgiteste.api.soap.generated.ANIVERSARIANTE;
 import osgiteste.util.PropertiesInteractor;
 
 import javax.mail.MessagingException;

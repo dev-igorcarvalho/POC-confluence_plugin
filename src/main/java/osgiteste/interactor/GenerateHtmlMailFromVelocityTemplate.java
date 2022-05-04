@@ -3,7 +3,7 @@ package osgiteste.interactor;
 import com.atlassian.confluence.renderer.radeox.macros.MacroUtils;
 import com.atlassian.confluence.util.velocity.VelocityUtils;
 import org.springframework.stereotype.Component;
-import osgiteste.api.soap.client.ANIVERSARIANTE;
+import osgiteste.api.soap.generated.ANIVERSARIANTE;
 
 import java.util.ArrayList;
 import java.util.Arrays;

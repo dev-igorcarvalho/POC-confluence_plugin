@@ -2,7 +2,7 @@ package osgiteste.interactor;
 
 import dev.failsafe.*;
 import org.springframework.stereotype.Component;
-import osgiteste.api.soap.client.ANIVERSARIANTE;
+import osgiteste.api.soap.generated.ANIVERSARIANTE;
 import osgiteste.util.Logger;
 import osgiteste.util.PropertiesInteractor;
 

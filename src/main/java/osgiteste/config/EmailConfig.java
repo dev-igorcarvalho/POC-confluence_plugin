@@ -1,16 +1,12 @@
 package osgiteste.config;
 
 
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.exception.VelocityException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.ui.velocity.VelocityEngineFactory;
-import org.springframework.ui.velocity.VelocityEngineFactoryBean;
+import osgiteste.util.PropertiesInteractor;
 
-import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
@@ -18,15 +14,12 @@ public class EmailConfig {
 
     @Bean
     public JavaMailSender javaMailSender() {
+        Properties properties = new PropertiesInteractor().getPropertiesFromResources("email.properties");
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
+        mailSender.setHost(properties.getProperty("mail.host"));
         mailSender.setPort(587);
-
-        mailSender.setUsername("noreply@datagrupo.com.br");
-        mailSender.setPassword("m4st3rr00t");
-//        mailSender.setUsername("helio.lima@guedder.com");
-//        mailSender.setPassword("tcdjbutkymwssdnz");
-
+        mailSender.setUsername(properties.getProperty("mail.username"));
+        mailSender.setPassword(properties.getProperty("mail.password"));
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
@@ -35,16 +28,4 @@ public class EmailConfig {
 
         return mailSender;
     }
-//    @Bean
-//    public VelocityEngine velocityEngine() throws VelocityException, IOException{
-//        VelocityEngineFactoryBean factory = new VelocityEngineFactoryBean();
-//        Properties props = new Properties();
-//        props.put("resource.loader", "class");
-//        props.put("class.resource.loader.class",
-//              "org.apache.velocity.runtime.resource.loader." +
-//                    "ClasspathResourceLoader");
-//        factory.setVelocityProperties(props);
-//
-//        return factory.createVelocityEngine();
-//    }
 }

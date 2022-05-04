@@ -1,9 +1,9 @@
 package osgiteste.interactor;
 
 import org.springframework.stereotype.Component;
-import osgiteste.api.soap.client.ANIVERSARIANTE;
-import osgiteste.api.soap.client.AniversariantesProxyLocator;
-import osgiteste.api.soap.client.AniversariantesProxyPortType;
+import osgiteste.api.soap.generated.ANIVERSARIANTE;
+import osgiteste.api.soap.generated.AniversariantesProxyLocator;
+import osgiteste.api.soap.generated.AniversariantesProxyPortType;
 
 @Component
 public class FecthAniversariantesDiaFromProtheus {

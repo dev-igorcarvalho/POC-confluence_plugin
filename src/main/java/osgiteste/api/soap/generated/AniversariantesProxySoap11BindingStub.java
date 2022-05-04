@@ -5,7 +5,7 @@
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package osgiteste.api.soap.client;
+package osgiteste.api.soap.generated;
 
 public class AniversariantesProxySoap11BindingStub extends org.apache.axis.client.Stub implements AniversariantesProxyPortType {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
