@@ -2,14 +2,17 @@
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/api/soap/client/service/AniversariantesServiceImpl.java
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/api/soap/client/AniversariantesProxySoap11BindingStub.java
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/interactor/FecthAniversariantesDiaFromProtheus.java
+/home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/interactor/ConsolePrintAniversaraintes.java
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/service/EmailService.java
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/interactor/GenerateHtmlMailFromVelocityTemplate.java
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/api/soap/client/EMAILFUNC.java
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/api/soap/client/AniversariantesProxy.java
+/home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/interactor/SendAniversariantesAsync.java
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/interactor/GenerateAniversariantesDia.java
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/interactor/GenerateAniversariantesPhoto.java
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/api/soap/client/service/AniversariantesService.java
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/interactor/SendEmailFalhaTecnica.java
+/home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/interactor/GenerateHtmlPageFromVelocityTemplate.java
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/macro/AniversariantesMacro.java
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/api/soap/client/AniversariantesProxyPortTypeProxy.java
 /home/tomcat/Documents/rnp/projetos/osgi/src/main/java/osgiteste/api/soap/client/AniversariantesProxyPortType.java

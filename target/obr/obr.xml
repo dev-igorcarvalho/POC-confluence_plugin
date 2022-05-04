@@ -1,7 +1,7 @@
-<repository lastmodified='20220504031545.076'>
+<repository lastmodified='20220504043704.323'>
   <resource id='br.com.igor.osgi/1.0.0.SNAPSHOT' symbolicname='br.com.igor.osgi' presentationname='osgi' uri='osgi-1.0.0-SNAPSHOT.jar' version='1.0.0.SNAPSHOT'>
     <description>This is the br.com.igor:osgi plugin for Atlassian Confluence.</description>
-    <size>2767148</size>
+    <size>2769351</size>
     <documentation>http://www.example.com/</documentation>
     <capability name='bundle'>
       <p n='symbolicname' v='br.com.igor.osgi'/>
