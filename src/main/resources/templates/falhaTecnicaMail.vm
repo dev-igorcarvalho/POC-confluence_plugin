@@ -1,0 +1,40 @@
+#requireResource("br.com.igor.osgi:osgi-resources")
+
+
+#set( $title = "Falha técnica" )
+
+
+<html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body style="margin:0; padding:0;">
+<div class="container" style="width: 960px; margin: 0 auto;">
+    <div class="header">
+    </div>
+    <div class="content"
+         style="width: 940px; padding: 0 10px; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 18px;">
+
+        <p style="padding: 0 10px; margin: 5px; color: black; font-size: 13px; font-style: italic;">Prezados,</p>
+
+        <p style="padding: 0 10px; margin: 5px; color: black; font-size: 13px; font-style: italic;">Ocorreu um erro
+            sistêmico ao tentar enviar a lista de Aniversariantes do Dia.</p>
+
+        <p style="padding: 0 10px 5px; margin: 25px; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; color: #919191;">
+            <span style="color:#213474">ERRO:</span> $errorMsg</p>
+
+        <p style="padding: 0 10px; margin: 5px; color: black; font-size: 13px; font-style: italic;">
+            Favor verificar os Logs do servidor e executar o
+            <a href="https://integra.rnp.br/admin/scheduledjobs/viewscheduledjobs.action">serviço</a>
+            de email manualmente.
+        </p>
+
+
+    </div>
+</div>
+</body>
+</html>

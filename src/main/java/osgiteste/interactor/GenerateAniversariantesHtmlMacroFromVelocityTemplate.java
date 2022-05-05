@@ -13,13 +13,13 @@ import java.util.Locale;
 import java.util.Map;
 
 @Component
-public class GenerateHtmlPageFromVelocityTemplate {
+public class GenerateAniversariantesHtmlMacroFromVelocityTemplate {
     private final FecthAniversariantesDiaFromProtheus fecthAniversariantesDiaFromProtheus;
     private final PropertiesInteractor propertiesInteractor;
     private final GenerateAniversariantesDia generateAniversariantesDia;
 
-    public GenerateHtmlPageFromVelocityTemplate(FecthAniversariantesDiaFromProtheus fecthAniversariantesDiaFromProtheus,
-                                                PropertiesInteractor propertiesInteractor, GenerateAniversariantesDia generateAniversariantesDia) {
+    public GenerateAniversariantesHtmlMacroFromVelocityTemplate(FecthAniversariantesDiaFromProtheus fecthAniversariantesDiaFromProtheus,
+                                                                PropertiesInteractor propertiesInteractor, GenerateAniversariantesDia generateAniversariantesDia) {
         this.fecthAniversariantesDiaFromProtheus = fecthAniversariantesDiaFromProtheus;
         this.propertiesInteractor = propertiesInteractor;
         this.generateAniversariantesDia = generateAniversariantesDia;

@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class GenerateHtmlMailFromVelocityTemplate {
+public class GenerateAniversariantesHtmlMailFromVelocityTemplate {
     public String execute(List<ANIVERSARIANTE> aniversariantes) {
         Map<String, Object> context = MacroUtils.defaultVelocityContext();
         context.put("aniversariantes", getAniversariantesMatrix(aniversariantes));
         context.put("matrizAniversariantes", getAniversariantesMatrix(aniversariantes));
-        return VelocityUtils.getRenderedTemplate("/templates/mail.vm", context);
+        return VelocityUtils.getRenderedTemplate("/templates/aniversariantesMail.vm", context);
     }
 
     private List<List<ANIVERSARIANTE>> getAniversariantesMatrix(List<ANIVERSARIANTE> aniversariantes) {

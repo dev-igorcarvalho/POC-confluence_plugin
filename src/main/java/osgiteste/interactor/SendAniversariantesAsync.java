@@ -44,9 +44,16 @@ public class SendAniversariantesAsync {
         RetryPolicy<Object> retryPolicy = RetryPolicy.builder().handle(Throwable.class).withDelay(Duration.ofSeconds(secondsToRetry))
               .withMaxRetries(maxRetries)
               .build();
-        Fallback<Object> fallback = Fallback.of(() -> enviarNotificacaoDeFalha());
+        Fallback<Object> fallback = Fallback.ofException(e -> {
+            enviarNotificacaoDeFalha(e.getLastException().getMessage());
+            return new RuntimeException(e.getLastException());
+        });
         Timeout<Object> timeout = Timeout.of(Duration.ofSeconds(secondsToTimeout));
-        FailsafeExecutor<Object> failsafeExecutor = Failsafe.with(fallback).compose(retryPolicy).compose(timeout);
+
+        FailsafeExecutor<Object> failsafeExecutor = Failsafe.with(fallback)
+              .compose(retryPolicy)
+//              .compose(timeout) // o timeout mascara a exception personalidade
+              .onComplete((e) -> Logger.info("A TASK ASINCRONA FOI FINALIZADA"));
         return failsafeExecutor;
     }
 
@@ -57,10 +64,8 @@ public class SendAniversariantesAsync {
         sendAniversariantesDiaMail.execute(aniversariantes);
     }
 
-    private void enviarNotificacaoDeFalha() {
+    private void enviarNotificacaoDeFalha(String errorMsg) {
         Logger.info("TODAS TENTATIVAS FALHARAM");
-        sendEmailFalhaTecnica.execute();
+        sendEmailFalhaTecnica.execute(errorMsg);
     }
-
-
 }

@@ -46,7 +46,7 @@ public class PropertiesInteractor {
 
     public Properties getPropertiesFromResources(String fileName) {
         Properties p = new Properties();
-        InputStream is = getClass().getClassLoader().getResourceAsStream(DEFAULT_PROPERTIES);
+        InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
         if (is != null) {
             try {
                 p.load(is);

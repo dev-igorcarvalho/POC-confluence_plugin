@@ -4,6 +4,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+import osgiteste.util.PropertiesInteractor;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -12,20 +13,26 @@ import javax.mail.internet.MimeMessage;
 public class SendEmailFalhaTecnica {
     private final JavaMailSender javaMailSender;
 
-    public SendEmailFalhaTecnica(JavaMailSender javaMailSender) {
+    private final GenerateFalhaTecnicaHtmlMailFromVelocityTemplate generateFalhaTecnicaHtmlMailFromVelocityTemplate;
+    private final PropertiesInteractor propertiesInteractor;
+
+    public SendEmailFalhaTecnica(JavaMailSender javaMailSender, GenerateFalhaTecnicaHtmlMailFromVelocityTemplate generateFalhaTecnicaHtmlMailFromVelocityTemplate, PropertiesInteractor propertiesInteractor) {
         this.javaMailSender = javaMailSender;
+        this.generateFalhaTecnicaHtmlMailFromVelocityTemplate = generateFalhaTecnicaHtmlMailFromVelocityTemplate;
+        this.propertiesInteractor = propertiesInteractor;
     }
-    public void execute() {
+
+    public void execute(String errorMsg) {
         MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail);
         try {
-            helper.setTo("igor.carvalho@terceiro.rnp.br");
-            helper.setSubject("Não é virús, não é bug, é so o Igor testando uns emails ❤️");
-            helper.setFrom("Confluence");
-            helper.setText("O envio falhou", true);
+            helper.setTo(propertiesInteractor.getStringByKey("mail.falha.destinatario"));
+            helper.setSubject(propertiesInteractor.getStringByKey("mail.falha.assunto"));
+            helper.setFrom(propertiesInteractor.getStringByKey("mail.falha.remetente"));
+            helper.setText(generateFalhaTecnicaHtmlMailFromVelocityTemplate.execute(errorMsg), true);
             javaMailSender.send(mail);
         } catch (MailException | MessagingException e) {
-            osgiteste.util.Logger.error("Houve algum problema no envio de email", e);
+            osgiteste.util.Logger.error("Houve algum problema no envio de email de falha tecnica", e);
         }
     }
 }

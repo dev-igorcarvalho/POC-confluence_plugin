@@ -4,16 +4,16 @@ import com.atlassian.confluence.content.render.xhtml.ConversionContext;
 import com.atlassian.confluence.macro.Macro;
 import com.atlassian.confluence.macro.MacroExecutionException;
 import org.springframework.stereotype.Component;
-import osgiteste.interactor.GenerateHtmlPageFromVelocityTemplate;
+import osgiteste.interactor.GenerateAniversariantesHtmlMacroFromVelocityTemplate;
 
 import java.util.Map;
 
 
 @Component
 public class AniversariantesMacro implements Macro {
-    private final GenerateHtmlPageFromVelocityTemplate generateHtmlPageFromVelocityTemplate;
+    private final GenerateAniversariantesHtmlMacroFromVelocityTemplate generateHtmlPageFromVelocityTemplate;
 
-    public AniversariantesMacro(GenerateHtmlPageFromVelocityTemplate generateHtmlPageFromVelocityTemplate) {
+    public AniversariantesMacro(GenerateAniversariantesHtmlMacroFromVelocityTemplate generateHtmlPageFromVelocityTemplate) {
         this.generateHtmlPageFromVelocityTemplate = generateHtmlPageFromVelocityTemplate;
     }
 
